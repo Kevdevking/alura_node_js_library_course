@@ -1,17 +1,12 @@
-import http from "http";
+import app from "./src/app.js";
 
 const PORT = 3000;
 const routes = {
-    "/": "Curso de Express API",
-    "/livros": "Entrei na rota Livros",
-    "/autores": "Entrei na rota Autores"
+    "/": "Node.js course",
+    "/books": "Entered Book's route",
+    "/authors": "Entered Author's route"
 }
 
-const server = http.createServer((req, res) => {
-    res.writeHead(200, {"Content-Type": "text/plain"});
-    res.end(routes[req.url]);
-});
-
-server.listen(PORT, () => {
-    console.log("escutando");
+app .listen(PORT, () => {
+    console.log("listening");
 });
