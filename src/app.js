@@ -1,25 +1,10 @@
-import express from "express";
+const express = require('express');
+const Book = require('./models/Book');
 
 const app = express();
 
 app.use(express.json());
 
-const books = [
-    {
-        id: 1,
-        title: "Lord of The Rings"
-    },
-    {
-        id: 2,
-        title: "The Hobbit"
-    }
-];
-
-function getBookById(id) {
-    return books.findIndex(book => {
-        return book.id === Number(id);
-    });
-}
 
 app.get("/", (req, res) => {
     res.status(200).send("Node.js course");
@@ -36,8 +21,12 @@ app.delete("/books/:id", (req, res) => {
 });
 
 app.post("/books", (req, res) => {
-    books.push(req.body);
-    res.status(201).send("Book successfully added!");
+
+    const book = Book.create(req.body);
+    res.status(201).json({
+        message: "livro criado com sucesso",
+        book: book
+    }); 
 });
 
 app.put("/books/:id", (req, res) => {
@@ -50,4 +39,6 @@ app.put("/books/:id", (req, res) => {
     }
 });
 
-export default app;
+app.listen(3000, () => {
+    console.log("listening");
+});
