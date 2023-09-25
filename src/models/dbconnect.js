@@ -2,6 +2,7 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('alurabooks', 'root', 'root',{
     dialect: 'mysql',
+    logging: false
   });
 
   sequelize.authenticate()

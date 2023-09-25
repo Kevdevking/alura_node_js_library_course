@@ -8,7 +8,7 @@ app.use(express.json());
 
 
 app.get("/", (req, res) => {
-    res.status(200).send("Node.js course");
+    res.redirect('/books');
 });
 
 app.get("/books", async (req, res) => {
@@ -25,6 +25,11 @@ app.get("/books/:id", async (req, res) => {
     res.status(200).json(book);
 });
 
+app.get("/books2/:id", async (req, res) => {
+    const book = await Book.findByPk(req.params.id);   
+    res.status(200).json(book);
+});
+
 app.delete("/books/:id", async (req, res) => {
     
     await Book.destroy({
@@ -37,12 +42,16 @@ app.delete("/books/:id", async (req, res) => {
     })
 });
 
-app.post("/books", (req, res) => {
+app.post("/books", async (req, res) => {
 
-    const book = Book.create(req.body);
+    const book = await Book.create(req.body);
     res.status(201).json({
         error: false,
-        message: "Book created!"
+        message: "Book created!",
+        book: {
+            id: book.id,
+            title: book.title
+        }
     });
 });
 
